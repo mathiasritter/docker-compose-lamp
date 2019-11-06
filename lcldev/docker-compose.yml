@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  apache:
+    image: php:7.2-apache
+    ports:
+      - "80:80"
+    volumes:
+      - ../src:/var/www/html
+    env_file:
+      - local.env
+    depends_on:
+      - mysql
+  mysql:
+    image: mariadb:10.3.18
+    volumes:
+      - ./db:/var/lib/mysql
+    env_file:
+      - local.env
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.9
+    ports:
+      - "8080:80"
+    volumes:
+      - ./admin:/var/www/html
+    env_file:
+      - local.env
+    depends_on:
+      - mysql
